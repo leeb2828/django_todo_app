@@ -58,6 +58,12 @@ Sign up, log in, and create some todo lists. This is what the page will look lik
 ![Project Image](project_images/todo_lists.png)
 
 <br />
+
+Quit the server with CONTROL-C.
+To deactivate the pipenv virtual environment, use the "exit" command.
+For the venv virtual environment, use "deactivate".
+
+<br />
 <br />
 
 I credit the front end design of this app to Kevin Powell.
