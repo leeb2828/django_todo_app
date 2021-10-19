@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- no caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>Lee Haney ToDo List</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'todo_app/css/small.css' %}">
+    <link rel="stylesheet" media="(min-width: 715px)" href="{% static 'todo_app/css/main.css' %}">
+</head>
+<body>
+    
+    <h4 class="title">Let's Get Organized</h4>
+
+    <!-- All of the Todo Lists from the database -->
+    <div class="all-tasks">
+        <h2 class="task-list-title">Todo Lists</h2>
+        <ul class="task-list">
+            {% if names %}
+                {% for item in names %}
+                    {% if item == first_list %}
+                        <li class="list-name active-list"><a href="{% url 'home' item %}">{{ first_list }}</a></li>
+                    {% else %}
+                        <li class="list-name"><a href="{% url 'home' item %}">{{ item }}</a></li>
+                    {% endif %}
+                {% endfor %} 
+            {% endif %} 
+        </ul>
+        <form action="/add_stuff/{{None}}" method="POST">
+            {% csrf_token %}
+            <input 
+                name="addNewList"
+                type="text"
+                class="new list"
+                placeholder="new list name"
+                aria-label="new list name"
+            />
+            <button class="btn create"
+            aria-label="create new list">+</button>
+        </form>
+    </div>
+
+    <!-- Currently selected Todo List -->
+    {% if first_list %}
+    <div class="todo-list">
+        <div class="todo-header">
+            <h2 class="list-title">{{ first_list }}</h2>
+            <div class="logout_link"><a href="{% url 'logout_user' %}">Logout</a></div> 
+        </div>
+        <!-- All of the tasks from the currently selected Todo List  -->
+        <div class="todo-body">
+            <div class="tasks">
+                {% if first_tasks %} 
+                    {% for item in first_tasks %}
+                        <!-- task -->
+                        <div class="task">
+                            <input 
+                                type="checkbox"
+                                id="task-{{forloop.counter}}"
+                                name="{{item}}"
+                            />
+                            <label for="task-{{forloop.counter}}">
+                                <span class="custom-checkbox"></span>
+                                {{ item }} 
+                            </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="new-task-creator">
+                <form action="/add_stuff/{{first_list}}" method="POST">
+                    {% csrf_token %}
+                    <input 
+                        name="addNewTask"
+                        type="text"
+                        class="new task"
+                        placeholder="new task name"
+                        aria-label="new task name"
+                    />
+                    <button class="btn create"
+                    aria-label="create new task">+</button>
+                </form>
+            </div>
+
+            <form action="/delete_stuff/{{first_list}}" method="POST" id="deleting" class="delete-stuff">
+                {% csrf_token %}
+                <a href="#"><button name="tasks" class="btn delete">Clear Completed Tasks</button></a>
+                <a href="#"><button name="list" class="btn delete">Delete List</button></a>
+                <!-- <a href="{% url 'logout_user' %}"><button class="btn delete">Logout</button></a> -->
+            </form>
+
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="whitespace"></div>
+
+    <script src="{% static 'todo_app/js/script.js' %}"></script>
+</body>
+</html>

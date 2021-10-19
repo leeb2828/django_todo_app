@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- no caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <title>Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'todo_app/css/login.css' %}">
+
+</head>
+<body>
+    <h1 class="title">Let's Get Organized</h1>
+    
+    <main>
+        <div id="login">
+            <h2 class="label">Login</h2>
+            <form action="/login_user" method="POST">
+                {% csrf_token %}
+                {{ loginform }}
+                <label class="login_fail">User Not Found</label>
+                <button>Login</button>
+            </form>
+        </div>
+        
+        <div id="signup">
+            <h2 class="label">Sign Up</h2>
+            <form action="/signup_user" method="POST">
+                {% csrf_token %}
+                {{ signupform }}
+                <button>Signup</button>
+            </form>
+        </div>
+    </main>
+
+       
+</body>
+</html>
