@@ -67,5 +67,7 @@ For the venv virtual environment, use "deactivate".
 <br />
 
 I credit the front end design of this app to Kevin Powell.
+<br />
 Github: https://github.com/kevin-powell/todo-list-collab 
+<br />
 Tutorial: https://www.youtube.com/watch?v=IhmSidOJSeE
